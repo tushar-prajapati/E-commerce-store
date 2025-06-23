@@ -5,7 +5,7 @@
 
 ### Universal ###
 # Common files that should be ignored in all projects
-
+*.txt
 # Logs
 *.log
 # Temporary files

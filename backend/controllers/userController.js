@@ -118,6 +118,56 @@ const updateUserProfile = asyncHandler(async(req,res)=>{
 
 })
 
+const deleteUserById = asyncHandler(async(req,res)=>{
+    const user = await User.findById(req.params.id)
+    if(!user){
+        throw new ApiError(401, "User not found");
+    }
+    if(user.isAdmin){
+        throw new ApiError(402, "Admin Cannot be deleted")
+    }
+    await User.deleteOne({_id: user._id})
 
+    res.status(200).json({msg: "User deleted Successfully"})
+})
 
-export { createUser, loginUser, logoutUser, getUsers, getCurrentUserProfile, updateUserProfile }
+const getUserById = asyncHandler(async(req,res)=>{
+    const user = await User.findById(req.params.id).select("-password");
+    if(!user){
+        throw new ApiError(402, "User not found")
+    }
+    else{
+        res.json(user)
+    }
+})
+
+const updateUserById = asyncHandler(async(req,res)=>{
+    const user = await User.findById(req.params.id).select("-password");
+    if(!user){
+        throw new ApiError(402, "User not found")
+    }
+    user.username = req.body.username || user.username;
+    user.email = req.body.email || user.email;
+    user.isAdmin = Boolean(req.body.isAdmin) || user.isAdmin
+
+    const updatedUser = await user.save();
+    res.status(200).json({
+        _id: updatedUser._id,
+        username: updatedUser.username,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin
+    })
+
+})
+
+export { 
+    createUser, 
+    loginUser, 
+    logoutUser, 
+    getUsers, 
+    getCurrentUserProfile, 
+    updateUserProfile,
+    deleteUserById,
+    getUserById,
+    updateUserById
+ }
