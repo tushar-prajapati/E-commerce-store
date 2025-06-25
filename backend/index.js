@@ -23,4 +23,3 @@ app.use('/api/users', userRoutes)
 
 app.listen(port, ()=>{console.log(`Server running on PORT: ${port}`)});
 
-

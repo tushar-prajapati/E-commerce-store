@@ -5,8 +5,14 @@ import {FaHeart} from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import './Navigation.css'
 import { useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { useLoginMutation, useLogoutMutation } from '../../redux/api/usersApiSlice.js'
+import { logout } from '../../redux/features/auth/authSlice.js'
+
 
 const Navigation = () => {
+
+    const {userInfo} = useSelector(state=>state.auth)
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [showSidebar, setShowSidebar] = useState(false);
 
@@ -19,6 +25,20 @@ const Navigation = () => {
 
     const closeSidebar = ()=>{
         setShowSidebar(false);
+    }
+    const dispath = useDispatch();
+    const navigate = useNavigate();
+
+    const [logoutApiCall] = useLogoutMutation();
+
+    const logoutHandler = async ()=>{
+      try {
+        await logoutApiCall().unwrap();
+        dispath(logout());
+        navigate('/login')
+      } catch (error) {
+          console.log(error)
+      }
     }
 
   return (
@@ -49,6 +69,62 @@ const Navigation = () => {
         <span className="hidden nav-item-name mt-[3rem]">Favourites</span>
         </Link>
       </div>
+      <div className="relative">
+        <button onClick={toggleDropdown} className='flex items-center text-gray-800 focus:ouline-none'>
+          {userInfo? <span className='text-white'>{userInfo.username}</span>: (<></>)}
+          {userInfo && (
+            <svg
+            xmlns='http://www.w3.org/2000/svg'
+            className={`h-4 w-4 ml-1 ${
+              dropdownOpen? "transform rotate-180": ""
+              }`}
+            fill='none'
+            viewBox='0 0 24 24'
+            stroke='white'
+            >
+              <path 
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth='2'
+              d={dropdownOpen? "M5 15L7-7 7 7": "M19 9l-7 7-7-7"}
+              />
+            </svg>
+          )}
+        </button>
+          {dropdownOpen && userInfo && (
+            <ul className={`absolute right-0 bottom-0 ml-14 space-y-2 bg-gray-700 text-white $userInfo.${!userInfo.isAdmin? "-top-20": "-top-80"} `}>
+  {userInfo.isAdmin && (
+    <>
+    <li>
+      <Link to='/admin/dashboard' className='block px-4 py-2 hover:bg-gray-600'>Dashboard</Link>
+    </li>
+    <li>
+      <Link to='/admin/productlist' className='block px-4 py-2 hover:bg-gray-600'>Products</Link>
+    </li>
+    <li>
+      <Link to='/admin/categorylist' className='block px-4 py-2 hover:bg-gray-600'>Category</Link>
+    </li>
+    <li>
+      <Link to='/admin/orderlist' className='block px-4 py-2 hover:bg-gray-600'>Orders</Link>
+    </li>
+    <li>
+      <Link to='/admin/userlist' className='block px-4 py-2 hover:bg-gray-600'>Users</Link>
+    </li>
+    
+    </>
+  )}
+  <li>
+      <Link to='/admin/profile' className='block px-4 py-2 hover:bg-gray-600'>Profile</Link>
+    </li>
+    <li>
+      <button onClick={logoutHandler} className='block px-4 py-2 hover:bg-gray-600'>Logout</button>
+    </li>
+    </ul>
+          )}
+
+      </div>
+
+    {!userInfo && (
       <ul>
         <li>
         <Link to='/login'
@@ -67,6 +143,7 @@ const Navigation = () => {
         </Link>
         </li>
       </ul>
+      )}
 
 
 
