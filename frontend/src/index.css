@@ -10,7 +10,7 @@ body {
 
 input, textarea{
     border: 1px solid rgb(81, 81, 81);
-    color: #fff;
+    /* color: #fff; */
 }
 
 
