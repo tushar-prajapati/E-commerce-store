@@ -26,7 +26,7 @@ const Navigation = () => {
     const closeSidebar = ()=>{
         setShowSidebar(false);
     }
-    const dispath = useDispatch();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [logoutApiCall] = useLogoutMutation();
@@ -34,7 +34,8 @@ const Navigation = () => {
     const logoutHandler = async ()=>{
       try {
         await logoutApiCall().unwrap();
-        dispath(logout());
+        dispatch(logout());
+        setDropdownOpen(false);
         navigate('/login')
       } catch (error) {
           console.log(error)
@@ -56,7 +57,7 @@ const Navigation = () => {
         <AiOutlineShopping size={26} className='mr-2 mt-[3rem]' />
         <span className="hidden nav-item-name mt-[3rem]">SHOP</span>
         </Link>
-        <Link to='/cart'
+        <Link onClick={()=>toggleDropdown()} to='/cart'
         className='flex items-center transition-transform transform hover:translate-x-2'
         >
         <AiOutlineShoppingCart size={26} className='mr-2 mt-[3rem]' />
@@ -70,8 +71,8 @@ const Navigation = () => {
         </Link>
       </div>
       <div className="relative">
-        <button onClick={toggleDropdown} className='flex items-center text-gray-800 focus:ouline-none'>
-          {userInfo? <span className='text-white'>{userInfo.username}</span>: (<></>)}
+        <button onClick={toggleDropdown} className='cursor-pointer flex items-center text-gray-800 focus:ouline-none'>
+          {userInfo? <span className='text-white hover:underline'>{userInfo.username}</span>: (<></>)}
           {userInfo && (
             <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -92,29 +93,29 @@ const Navigation = () => {
           )}
         </button>
           {dropdownOpen && userInfo && (
-            <ul className={`absolute right-0 bottom-0 ml-14 space-y-2 bg-gray-700 text-white $userInfo.${!userInfo.isAdmin? "-top-20": "-top-80"} `}>
+            <ul className={` absolute right-0 bottom-0 ml-14 space-y-2 bg-gray-700 text-white $userInfo.${!userInfo.isAdmin? "-top-20": "-top-80"} `}>
   {userInfo.isAdmin && (
     <>
     <li>
-      <Link to='/admin/dashboard' className='block px-4 py-2 hover:bg-gray-600'>Dashboard</Link>
+      <Link onClick={()=>toggleDropdown()} to='/admin/dashboard' className='block px-4 py-2 hover:bg-gray-600'>Dashboard</Link>
     </li>
     <li>
-      <Link to='/admin/productlist' className='block px-4 py-2 hover:bg-gray-600'>Products</Link>
+      <Link onClick={()=>toggleDropdown()} to='/admin/productlist' className='block px-4 py-2 hover:bg-gray-600'>Products</Link>
     </li>
     <li>
-      <Link to='/admin/categorylist' className='block px-4 py-2 hover:bg-gray-600'>Category</Link>
+      <Link onClick={()=>toggleDropdown()} to='/admin/categorylist' className='block px-4 py-2 hover:bg-gray-600'>Category</Link>
     </li>
     <li>
-      <Link to='/admin/orderlist' className='block px-4 py-2 hover:bg-gray-600'>Orders</Link>
+      <Link onClick={()=>toggleDropdown()} to='/admin/orderlist' className='block px-4 py-2 hover:bg-gray-600'>Orders</Link>
     </li>
     <li>
-      <Link to='/admin/userlist' className='block px-4 py-2 hover:bg-gray-600'>Users</Link>
+      <Link onClick={()=>toggleDropdown()} to='/admin/userlist' className='block px-4 py-2 hover:bg-gray-600'>Users</Link>
     </li>
     
     </>
   )}
   <li>
-      <Link to='/admin/profile' className='block px-4 py-2 hover:bg-gray-600'>Profile</Link>
+      <Link onClick={()=>toggleDropdown()} to='/profile' className='block px-4 py-2 hover:bg-gray-600'>Profile</Link>
     </li>
     <li>
       <button onClick={logoutHandler} className='block px-4 py-2 hover:bg-gray-600'>Logout</button>

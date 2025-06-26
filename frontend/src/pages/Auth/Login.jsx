@@ -10,7 +10,7 @@ import Loader from '../../components/Loader.jsx'
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState('');
-    const dispath = useDispatch();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [login, {isLoading}] = useLoginMutation()
     const {userInfo} = useSelector(state=>state.auth)
@@ -29,7 +29,8 @@ const Login = () => {
         try {
             const res = await login({email, password}).unwrap();
             console.log(res)
-            dispath(setCredentials({...res}))
+            dispatch(setCredentials({...res}))
+            toast.success(`Welcome Back, ${res.username}`)
         } catch (error) {
             toast.error(error?.data?.message || error.message)
         }
@@ -64,12 +65,20 @@ const Login = () => {
                 <div className="mt-4">
                     <p className="text-white">
                         New Customer ? {" "}
-                        <Link to={redirect? `/register/redirect=${redirect}`: '/register'}
+                        <Link to={redirect? `/register?redirect=${redirect}`: '/register'}
                         className='text-pink-500 hover:underline'
                         >Register</Link>
                     </p>
                 </div>
             </div>
+            
+        <div className='h-screen w-[43%] flex items-center justify-center'>
+        <img
+        src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80"
+        alt=""
+        className="h-[90%] w-full xl:block md:hidden sm:hidden rounded-lg"
+      />
+        </div>
         </section>
     </div>
   )

@@ -1,5 +1,6 @@
 import User from "../models/userModel.js";
 import asyncHandler from "../middlewares/asyncHandler.js";
+// import asyncHandler from "express-async-handler";
 import { ApiError } from "../utils/apiError.js";
 import bcrypt from "bcryptjs";
 import generateToken from "../utils/generateToken.js";
@@ -8,6 +9,7 @@ import generateToken from "../utils/generateToken.js";
 const createUser = asyncHandler(async (req, res) => {
     const { username, email, password } = req.body;
     if (!username || !email || !password) {
+        
         throw new ApiError(400, "All fields are required.");
     }
 

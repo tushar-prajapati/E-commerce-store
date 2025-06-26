@@ -23,7 +23,7 @@ router.route('/logout').post(logoutUser)
 
 // secured routes
 
-router.route('/getUsers').get(authenticate, authorizeAdmin,getUsers)
+router.route('/getUsers').get(authenticate, authorizeAdmin, getUsers)
 router.route('/profile').get(authenticate, getCurrentUserProfile);
 router.route('/update').put(authenticate, updateUserProfile);
 

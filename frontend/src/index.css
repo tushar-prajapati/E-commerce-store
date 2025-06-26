@@ -1,1 +1,19 @@
 @import "tailwindcss";
+@plugin "flowbite-react/plugin/tailwindcss";
+@source "../.flowbite-react/class-list.json";
+
+
+body { 
+    background: #0f0f10;
+    color: #fff
+}
+
+input, textarea{
+    border: 1px solid rgb(81, 81, 81);
+    color: #fff;
+}
+
+
+button {
+    cursor: pointer
+}
