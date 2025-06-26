@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import cors from 'cors'
 import userRoutes from './routes/userRoutes.js'
 import { errorHandler } from "./middlewares/errorHandler.js";
+import categoryRoutes from './routes/categoryRoutes.js'
 
 import connectDB from "./config/db.js";
 
@@ -20,7 +21,7 @@ app.use(express.urlencoded({extended: true}))
 app.use(cookieParser());
 
 app.use('/api/users', userRoutes);
-app.use('/api/category', categoryRoutes)
+app.use('/api/category', categoryRoutes);
 
 app.use(errorHandler);
 
