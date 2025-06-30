@@ -100,7 +100,7 @@ const Navigation = () => {
       <Link onClick={()=>toggleDropdown()} to='/admin/dashboard' className='block px-4 py-2 hover:bg-gray-600'>Dashboard</Link>
     </li>
     <li>
-      <Link onClick={()=>toggleDropdown()} to='/admin/productlist' className='block px-4 py-2 hover:bg-gray-600'>Products</Link>
+      <Link onClick={()=>toggleDropdown()} to='/admin/allproductslist' className='block px-4 py-2 hover:bg-gray-600'>Products</Link>
     </li>
     <li>
       <Link onClick={()=>toggleDropdown()} to='/admin/categorylist' className='block px-4 py-2 hover:bg-gray-600'>Category</Link>
