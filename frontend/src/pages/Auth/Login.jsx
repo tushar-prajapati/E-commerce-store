@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import {Link, redirect, useLocation, useNavigate} from 'react-router-dom'
+import {Link,  useLocation, useNavigate} from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { setCredentials } from '../../redux/features/auth/authSlice.js'
 import { useLoginMutation } from '../../redux/api/usersApiSlice.js'
