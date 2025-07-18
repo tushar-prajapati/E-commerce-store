@@ -83,7 +83,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
 export const {
     useAllProductsQuery,
     useCreateProductMutation,
-    useCreateReviewMutationm,
+    useCreateReviewMutation,
     useGetProductsQuery,
     useDeleteProductMutation,
     useGetNewProductsQuery,

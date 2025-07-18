@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useLoginMutation, useLogoutMutation } from '../../redux/api/usersApiSlice.js'
 import { logout } from '../../redux/features/auth/authSlice.js'
+import FavoritesCount from '../Products/FavouritesCount.jsx'
 
 
 const Navigation = () => {
@@ -64,10 +65,12 @@ const Navigation = () => {
         <span className="hidden nav-item-name mt-[3rem]">CART</span>
         </Link>
         <Link to='/favourites'
-        className='flex items-center transition-transform transform hover:translate-x-2'
-        >
+        className='flex relative'
+        ><div className='flex justify-center items-center transition-transform transform hover:translate-x-2'>
         <FaHeart size={26} className='mr-2 mt-[3rem]' />
         <span className="hidden nav-item-name mt-[3rem]">Favourites</span>
+        <FavoritesCount />
+        </div>
         </Link>
       </div>
       <div className="relative">

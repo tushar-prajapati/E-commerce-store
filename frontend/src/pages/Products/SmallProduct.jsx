@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom";
-// import HeartIcon from "./HeartIcon";
+import HeartIcon from "./HeartIcon.jsx";
 
 const SmallProduct = ({ product }) => {
   return (
-    <div className="w-[20rem] ml-[2rem] p-3">
+    <div className="w-[15rem] ml-[2rem] p-3">
       <div className="relative">
         <img
           src={product.image}
           alt={product.name}
-          className="w-[20rem] rounded max-h-[15rem] object-cover"
+          className="w-[15rem] rounded max-h-[15rem] object-cover"
         />
-        {/* <HeartIcon product={product} /> */}
+        <HeartIcon product={product} />
       </div>
 
       <div className="p-4">
