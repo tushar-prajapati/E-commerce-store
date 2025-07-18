@@ -8,6 +8,7 @@ import {
 import { useFetchCategoriesQuery } from '../../redux/api/categoryApiSlice.js'
 import { toast } from 'react-toastify'
 import AdminMenu from './AdminMenu.jsx'
+import Loader from '../../components/Loader.jsx'
 
 const ProductList = () => {
     const [image, setImage] = useState('')
@@ -20,7 +21,7 @@ const ProductList = () => {
     const [stock, setStock] = useState(0)
     const [imageUrl, setImageUrl] = useState(null)
     const navigate = useNavigate()
-    const [uploadProductImage] = useUploadProductImageMutation()
+    const [uploadProductImage, {isLoading}] = useUploadProductImageMutation()
     const [createProduct] = useCreateProductMutation()
     const {data: categories} =useFetchCategoriesQuery()
 
@@ -81,7 +82,7 @@ const ProductList = () => {
             <AdminMenu/>
             <div className='md:w-3/4 p-3'>
                 <div className='h-12'>Create Product</div>
-                {imageUrl && (
+                {imageUrl && ( isLoading? <Loader/>:
                     <div className='text-center'>
                     <img src={imageUrl} alt="Product" className='block mx-auto max-h-[200px]'/>    
                      </div>
