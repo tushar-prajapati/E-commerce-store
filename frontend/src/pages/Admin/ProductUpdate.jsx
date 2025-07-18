@@ -5,7 +5,6 @@ import { useUpdateProductMutation, useDeleteProductMutation, useGetProductByIdQu
 import { useFetchCategoriesQuery } from '../../redux/api/categoryApiSlice.js'
 import { toast } from 'react-toastify'
 import AdminMenu from './AdminMenu.jsx'
-import Loader from '../../components/Loader.jsx'
 
 const ProductUpdate = () => {
     const params = useParams()
@@ -23,7 +22,7 @@ const ProductUpdate = () => {
     const navigate = useNavigate();
 
     const {data: categories = []} = useFetchCategoriesQuery()
-    const [uploadProductImage, {isLoading}] = useUploadProductImageMutation()
+    const [uploadProductImage] = useUploadProductImageMutation()
     const [updateProduct] = useUpdateProductMutation()
     const [deleteProduct]= useDeleteProductMutation() 
 
@@ -110,7 +109,7 @@ const ProductUpdate = () => {
             <AdminMenu/>
             <div className='md:w-3/4 p-3'>
                 <div className='h-12'>Update Product</div>
-                {image && ( isLoading? <Loader/>:
+                {image && (
                     <div className='text-center'>
                     <img src={image} alt="Product" className='block mx-auto max-h-[200px]'/>    
                      </div>
