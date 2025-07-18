@@ -44,8 +44,14 @@ const ProductUpdate = () => {
         formData.append('image', e.target.files[0])
         try {
             const res = await uploadProductImage(formData).unwrap()
+            if(res?.success){
             toast.success("Image Uploaded Successfully")
-            setImage(res.image)
+            setImage(res.imageUrl)
+            
+            }
+            else{
+                toast.error("Failed to upload image")
+            }
         } catch (error) {
             toast.error(error?.data?.message || error.message)
         }

@@ -14,7 +14,6 @@ import connectDB from "./config/db.js";
 dotenv.config();
 const port = process.env.PORT || 3000;
 connectDB();
-
 const app = express();
 
 app.use(cors({
@@ -32,8 +31,9 @@ app.use('/api/category', categoryRoutes);
 app.use('/api/product', productRoutes);
 app.use('/api/upload', uploadRoutes);
 
-const __dirname = path.resolve()
-app.use('/uploads',express.static(path.join(__dirname+'/uploads')))
+// const __dirname = path.resolve()
+// app.use('/uploads',express.static(path.join(__dirname+'/uploads')))
+
 
 app.use(errorHandler);
 

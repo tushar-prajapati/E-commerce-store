@@ -1,4 +1,3 @@
-// const API = import.meta.env.BACKEND_URL;
 
 export const BASE_URL = 'https://e-commerce-store-6z26.onrender.com' // For production, uncomment this line and comment the above line
 

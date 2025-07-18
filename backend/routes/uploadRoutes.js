@@ -1,8 +1,7 @@
 import express from "express";
 import multer from "multer";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
-import cloudinary from "../utils/cloudinary.js";
-
+import cloudinary from '../utils/cloudinary.js'
 const router = express.Router();
 
 const storage = new CloudinaryStorage({
@@ -29,9 +28,10 @@ const uploadSingleImage = upload.single("image");
 router.post("/", (req, res) => {
   uploadSingleImage(req, res, (err) => {
     if (err) {
-      res.status(400).send({ message: err.message });
+      res.status(401).send({ message: err.message });
     } else if (req.file) {
-      res.status(200).send({
+      res.status(200).json({
+        success: true,
         message: "Image uploaded successfully",
         imageUrl: req.file.path, 
       });
