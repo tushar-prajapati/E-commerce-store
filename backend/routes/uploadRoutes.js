@@ -1,31 +1,25 @@
-import path from "path";
 import express from "express";
 import multer from "multer";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import cloudinary from "../utils/cloudinary.js";
 
 const router = express.Router();
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-
-  filename: (req, file, cb) => {
-    const extname = path.extname(file.originalname);
-    cb(null, `${file.fieldname}-${Date.now()}${extname}`);
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'exam-portal', 
+    allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'heic'],
+    public_id: (req, file) => `img-${Date.now()}`,
   },
 });
 
 const fileFilter = (req, file, cb) => {
-  const filetypes = /jpe?g|png|heic|webp/;
-  const mimetypes = /image\/jpe?g|image\/heic|image\/png|image\/webp/;
-
-  const extname = path.extname(file.originalname).toLowerCase();
-  const mimetype = file.mimetype;
-
-  if (filetypes.test(extname) && mimetypes.test(mimetype)) {
+  const allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/heic'];
+  if (allowedMimes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error("Images only"), false);
+    cb(new Error('Only image files are allowed!'), false);
   }
 };
 
@@ -39,7 +33,7 @@ router.post("/", (req, res) => {
     } else if (req.file) {
       res.status(200).send({
         message: "Image uploaded successfully",
-        image: `/${req.file.path}`,
+        imageUrl: req.file.path, 
       });
     } else {
       res.status(400).send({ message: "No image file provided" });
