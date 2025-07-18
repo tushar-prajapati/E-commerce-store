@@ -8,7 +8,6 @@ import Product from "./pages/Products/Product.jsx"
 const Home = () => {
     const {keyword} = useParams();
     const {data, isLoading, isError} = useGetNewProductsQuery({keyword});
-    console.log(data)
 
 
   return (
