@@ -7,7 +7,7 @@ const router = express.Router();
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder: 'exam-portal', 
+    folder: 'Store', 
     allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'heic'],
     public_id: (req, file) => `img-${Date.now()}`,
   },
