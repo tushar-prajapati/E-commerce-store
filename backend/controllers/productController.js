@@ -113,7 +113,7 @@ const fetchProductsById = asyncHandler(async(req,res)=>{
 
 const fetchAllProducts = asyncHandler(async(req,res)=>{
     try {
-        const allProducts = await Product.find({}).populate('category').limit(12).sort({createdAt: -1});;
+        const allProducts = await Product.find({}).populate('category').sort({createdAt: -1});;
         res.status(200).json(allProducts);
     } catch (error) {
         throw new ApiError(403, error.message)
@@ -171,6 +171,31 @@ const fetchNewProducts = asyncHandler(async(req,res)=>{
     }
 })
 
+const getProductsByCategory = asyncHandler(async(req,res)=>{
+    
+    try {
+        const {categoryId} = req.params;
+        const products = await Product.find({category: categoryId})
+        res.status(200).json(products)
+    } catch (error) {
+        throw new ApiError(402, "Retrieve Failed")
+    }    
+}) 
+
+const filteredProducts = asyncHandler(async(req,res)=>{
+    try {
+        const {checked, radio} = req.body;
+        let args = {}
+        if(checked.length>0) args.category = checked;
+        if (radio?.length === 1) args.price = { $lte: radio[0] };
+        const products = await Product.find(args);
+        res.status(200).json(products)
+
+    } catch (error) {
+        throw new ApiError(403, "Server Error")
+    }
+})
+
 export {
     addProduct,
     updateProductDetails,
@@ -180,6 +205,8 @@ export {
     fetchAllProducts,
     addProductReview,
     fetchTopProducts,
-    fetchNewProducts
+    fetchNewProducts,
+    getProductsByCategory,
+    filteredProducts
 
 }

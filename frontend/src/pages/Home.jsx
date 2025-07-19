@@ -1,9 +1,9 @@
 import { Link, useParams } from "react-router-dom"
-import { useGetNewProductsQuery } from "./redux/api/productApiSlice.js"
-import Loader from "./components/Loader.jsx"
-import Header from "./components/Header.jsx"
-import Message from "./components/Message.jsx"
-import Product from "./pages/Products/Product.jsx"
+import { useGetNewProductsQuery } from "../redux/api/productApiSlice.js"
+import Loader from "../components/Loader.jsx"
+import Header from "../components/Header.jsx"
+import Message from "../components/Message.jsx"
+import Product from "./Products/Product.jsx"
 
 const Home = () => {
     const {keyword} = useParams();
@@ -13,7 +13,7 @@ const Home = () => {
   return (
     <>
     {!keyword? <Header/>: null}
-    {isLoading? <Loader/> : isError? (<Message variant='danger'>
+    {isLoading? <div className="w-full h-full flex justify-center items-center"><Loader/> </div> : isError? (<Message variant='danger'>
         {isError?.data.message || isError?.error}
     </Message>):(
         <>

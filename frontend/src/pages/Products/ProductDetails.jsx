@@ -19,7 +19,7 @@ import moment from "moment";
 import HeartIcon from "./HeartIcon.jsx";
 import Ratings from "./Ratings.jsx";
 import ProductTabs from "./ProductTabs.jsx";
-// import { addToCart } from "../../redux/features/cart/cartSlice.js";
+import { addToCart } from "../../redux/features/cart/cartSlice.js";
 
 const ProductDetails = () => {
   const { id: productId } = useParams();
@@ -42,26 +42,26 @@ const ProductDetails = () => {
   const [createReview, { isLoading: loadingProductReview }] =
     useCreateReviewMutation();
 
-//   const submitHandler = async (e) => {
-//     e.preventDefault();
+  const submitHandler = async (e) => {
+    e.preventDefault();
 
-//     try {
-//       await createReview({
-//         productId,
-//         rating,
-//         comment,
-//       }).unwrap();
-//       refetch();
-//       toast.success("Review created successfully");
-//     } catch (error) {
-//       toast.error(error?.data || error.message);
-//     }
-//   };
+    try {
+      await createReview({
+        productId,
+        rating,
+        comment,
+      }).unwrap();
+      refetch();
+      toast.success("Review created successfully");
+    } catch (error) {
+      toast.error(error?.data || error.message);
+    }
+  };
 
-//   const addToCartHandler = () => {
-//     dispatch(addToCart({ ...product, qty }));
-//     navigate("/cart");
-//   };
+  const addToCartHandler = () => {
+    dispatch(addToCart({ ...product, qty }));
+    navigate("/cart");
+  };
 
   return (
     <>
@@ -134,17 +134,17 @@ const ProductDetails = () => {
               </div>
 
               <div className="flex justify-between flex-wrap">
-                {/* <Ratings
+                <Ratings
                   value={product.rating}
                   text={`${product.numReviews} reviews`}
-                /> */}
+                />
 
                 {product.countInStock > 0 && (
                   <div>
                     <select
                       value={qty}
                       onChange={(e) => setQty(e.target.value)}
-                      className="p-2 w-[6rem] rounded-lg text-black"
+                      className="p-2 w-[6rem] rounded-lg text-white border"
                     >
                       {[...Array(product.countInStock).keys()].map((x) => (
                         <option key={x + 1} value={x + 1}>
@@ -158,9 +158,9 @@ const ProductDetails = () => {
 
               <div className="btn-container">
                 <button
-                //   onClick={addToCartHandler}
+                  onClick={addToCartHandler}
                   disabled={product.countInStock === 0}
-                  className="bg-pink-600 text-white py-2 px-4 rounded-lg mt-4 md:mt-0"
+                  className="bg-pink-600 text-white py-2 px-4 visited:bg-pink-800 rounded-lg mt-4 md:mt-0"
                 >
                   Add To Cart
                 </button>
@@ -171,7 +171,7 @@ const ProductDetails = () => {
               <ProductTabs
                 loadingProductReview={loadingProductReview}
                 userInfo={userInfo}
-                // submitHandler={submitHandler}
+                submitHandler={submitHandler} 
                 rating={rating}
                 setRating={setRating}
                 comment={comment}

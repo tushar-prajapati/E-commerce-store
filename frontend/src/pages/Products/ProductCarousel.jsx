@@ -4,6 +4,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import moment from "moment";
+import { Link } from "react-router-dom";
 import {
   FaBox,
   FaClock,
@@ -52,18 +53,26 @@ const ProductCarousel = () => {
               countInStock,
             }) => (
               <div key={_id}>
+                <Link to={`/product/${_id}`}>
+
                 <img
                   src={image}
                   alt={name}
-                  className="w-full rounded-lg object-cover h-[30rem]"
+                  className="w-full rounded-lg object-cover h-[30rem] hover:opacity-80"
                 />
+                </Link>
 
                 <div className="mt-4 flex justify-between">
+                
+
                   <div className="one">
-                    <h2>{name}</h2>
+                  <Link to={`/product/${_id}`}>
+                    <h2 className="hover:underline text-2xl">{name}</h2>
+                    </Link>
+
                     <p> ₹
                     {price}</p> <br /> <br />
-                    <p className="w-[25rem]">
+                    <p className="w-[25rem] text-sm">
                       {description.substring(0, 170)} ...
                     </p>
                   </div>
@@ -78,7 +87,7 @@ const ProductCarousel = () => {
                         {moment(createdAt).fromNow()}
                       </h1>
                       <h1 className="flex items-center mb-6">
-                        <FaStar className="mr-2 text-white" /> Reviews:
+                        <FaStar className="mr-2 text-white" /> Reviews: {" "}
                         {numReviews}
                       </h1>
                     </div>

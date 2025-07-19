@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Ratings from "./Ratings.jsx";
-import { useGetTopProductsQuery } from "../../redux/api/productApiSlice.js";
+import { useGetProductByCategoryQuery } from "../../redux/api/productApiSlice.js";
 import SmallProduct from "./SmallProduct.jsx";
 import Loader from "../../components/Loader.jsx";
 
@@ -15,7 +15,8 @@ const ProductTabs = ({
   setComment,
   product,
 }) => {
-  const { data, isLoading } = useGetTopProductsQuery();
+    const categoryId = product.category;
+  const { data, isLoading } = useGetProductByCategoryQuery({categoryId});
 
   const [activeTab, setActiveTab] = useState(1);
 
