@@ -8,6 +8,7 @@ import { errorHandler } from "./middlewares/errorHandler.js";
 import categoryRoutes from './routes/categoryRoutes.js'
 import productRoutes from './routes/productRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
+import orderRoutes from './routes/orderRoutes.js'
 
 import connectDB from "./config/db.js";
 
@@ -26,10 +27,17 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 app.use(cookieParser());
 
+
+
 app.use('/api/users', userRoutes);
 app.use('/api/category', categoryRoutes);
 app.use('/api/product', productRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/orders', orderRoutes)
+
+app.get('/api/config/paypal', (req,res)=>{
+  res.send({clientId: process.env.PAYPAL_CLIENT_ID});
+})
 
 // const __dirname = path.resolve()
 // app.use('/uploads',express.static(path.join(__dirname+'/uploads')))
